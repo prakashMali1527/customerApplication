@@ -120,6 +120,21 @@ function App() {
     }
   }, [activeDropdown]);
 
+  // Add viewport meta update for mobile
+  useEffect(() => {
+    // Ensure the viewport meta tag is set correctly for mobile
+    const viewportMeta = document.querySelector('meta[name="viewport"]');
+    if (viewportMeta) {
+      viewportMeta.setAttribute('content', 
+        'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+    }
+    
+    // Add touch detection class to body
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+      document.body.classList.add('touch-device');
+    }
+  }, []);
+
   const addPerson = () => {
     if (newPersonName.trim() === '') return;
     
