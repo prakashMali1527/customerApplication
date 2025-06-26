@@ -1,0 +1,934 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+  --primary-color: #4a6da7;
+  --primary-hover: #5a7db7;
+  --bg-dark: #1a1a1a;
+  --bg-light: #2c2c2c;
+  --border-radius: 8px;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #1e1e1e;
+  padding: 0 0.5rem;
+}
+
+#root {
+  width: 100%;
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 0.2rem 1.5rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+button {
+  border-radius: var(--border-radius);
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--bg-dark);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  border-color: var(--primary-color);
+  background-color: #292929;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 100%;
+  padding: 0 1rem;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.add-person-input {
+  display: flex;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 300px;
+  max-width: 600px;
+}
+
+.add-person-input input {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid #444;
+  background-color: #333;
+  color: white;
+  font-size: 1rem;
+}
+
+.add-person-input button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.add-person-input button:hover {
+  background-color: var(--primary-hover);
+}
+
+.print-controls {
+  position: relative;
+}
+
+.print-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.print-button:hover {
+  background-color: var(--primary-hover);
+}
+
+.print-options {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: #333;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 200px;
+  z-index: 9999;
+}
+
+.print-options button {
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  border-radius: 4px;
+  background-color: #444;
+  transition: all 0.2s ease;
+}
+
+.print-options button:hover {
+  background-color: #555;
+  transform: translateX(3px);
+}
+
+.print-options .cancel-button {
+  margin-top: 0.5rem;
+  background-color: #555;
+  text-align: center;
+}
+
+.columns-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  overflow: visible;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Container for day columns */
+.day-columns-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  width: 100%;
+  padding: 0;
+  overflow: visible;
+}
+
+/* Set minimum width for day columns */
+.day-columns-container .column {
+  width: 100%;
+  min-width: 150px;
+  margin: 0;
+  position: relative;
+  overflow: visible;
+}
+
+/* Add Day container */
+.add-day-container {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* Adjust column width for different screen sizes */
+@media (min-width: 1400px) {
+  .day-columns-container {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .day-columns-container {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .day-columns-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .columns-container {
+    flex-direction: column;
+  }
+  
+  .columns-container > .column:first-child {
+    max-width: 280px;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .day-columns-section {
+    width: 100%;
+    margin-left: 0;
+  }
+  
+  .day-columns-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .columns-container {
+    flex-direction: column;
+  }
+  
+  .columns-container > .column:first-child {
+    max-width: 280px;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .day-columns-section {
+    width: 100%;
+    overflow-x: auto;
+    margin-left: 0;
+  }
+  
+  .day-columns-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* Container for all day columns and add button */
+.day-columns-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-x: auto;
+  padding-left: 0;
+}
+
+.column {
+  min-width: 0;
+  max-width: none;
+  background-color: var(--bg-dark);
+  border-radius: var(--border-radius);
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  box-shadow: var(--box-shadow);
+  height: fit-content;
+  max-height: 80vh;
+  overflow-y: auto;
+  overflow: visible;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.column:first-child {
+  /* This rule is removed to prevent conflicts */
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid #333;
+  overflow: visible;
+  width: 100%;
+}
+
+.column-header h3 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+  width: 100%;
+  overflow: visible;
+  position: relative;
+}
+
+.column-header .actions {
+  display: flex;
+  gap: 6px;
+  overflow: visible;
+}
+
+.day-title {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  position: relative;
+}
+
+.edit-day-btn {
+  font-size: 0.7em;
+  padding: 0.3em 0.5em;
+  margin-right: 2px;
+  background-color: rgba(74, 109, 167, 0.2);
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  border-radius: 4px;
+  color: var(--primary-color);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-day-btn:hover {
+  opacity: 1;
+  background-color: rgba(74, 109, 167, 0.3);
+  transform: scale(1.1);
+}
+
+.edit-day-form {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  background-color: rgba(74, 109, 167, 0.1);
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.2s ease;
+  width: 100%;
+  position: relative;
+  z-index: 50;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.edit-day-form input {
+  width: 80px;
+  padding: 0.4rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid rgba(74, 109, 167, 0.3);
+  background-color: #333;
+  color: white;
+  font-size: 0.9em;
+  flex-shrink: 0;
+}
+
+.edit-day-form button {
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8em;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.edit-day-form button:first-of-type {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.edit-day-form button:last-of-type {
+  background-color: #555;
+  color: white;
+  border: none;
+}
+
+.people-count {
+  font-size: 0.7em;
+  font-weight: 600;
+  background-color: #444;
+  color: white;
+  border-radius: 12px;
+  padding: 2px 8px;
+  min-width: 20px;
+  text-align: center;
+  display: inline-block;
+  margin-left: 6px;
+}
+
+.person-item {
+  background-color: var(--bg-light);
+  border-radius: 6px;
+  padding: 0.7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-left: 3px solid transparent;
+}
+
+.person-item:hover {
+  background-color: #323232;
+  border-left: 3px solid var(--primary-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.day-assignment {
+  font-size: 0.75em;
+  background-color: #444;
+  color: white;
+  border-radius: 4px;
+  padding: 2px 6px;
+  margin-left: 8px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  z-index: 100;
+}
+
+.dropdown button, .remove-column-btn {
+  padding: 0.3em 0.6em;
+  font-size: 1em;
+  font-weight: 700;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdown button {
+  background-color: var(--primary-color);
+}
+
+.dropdown button:hover {
+  background-color: var(--primary-hover);
+}
+
+.remove-column-btn {
+  background-color: #e74c3c;
+  transition: all 0.2s ease;
+}
+
+.remove-column-btn:hover {
+  background-color: #c0392b;
+  transform: scale(1.05);
+}
+
+.remove-person-btn {
+  background-color: rgba(231, 76, 60, 0.7);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.2em 0.4em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.remove-person-btn:hover {
+  background-color: #e74c3c;
+  transform: scale(1.1);
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #333;
+  min-width: 180px;
+  box-shadow: var(--box-shadow);
+  z-index: 10;
+  max-height: 300px;
+  overflow-y: auto;
+  border-radius: var(--border-radius);
+  right: 0;
+  top: 100%;
+}
+
+.dropdown-content.show {
+  display: block;
+}
+
+/* Ensure all column buttons have a lower z-index than the dropdown */
+.column .dropdown button, 
+.column .remove-column-btn, 
+.column .collapse-column-btn, 
+.column .edit-day-btn {
+  position: relative;
+  z-index: 1;
+}
+
+/* Fix for dropdown being cut off */
+.column .dropdown .dropdown-content {
+  position: absolute;
+  top: calc(100% + 5px);
+  right: -20px;
+  z-index: 9999; /* Much higher than any other element */
+  width: 200px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.dropdown-item {
+  color: #fff;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  transition: all .15s ease;
+  border-left: 3px solid transparent;
+  position: relative;
+}
+
+.dropdown-item:hover {
+  background-color: #444;
+  border-left: 3px solid var(--primary-color);
+}
+
+.dropdown-item.already-added {
+  background-color: #4a6da733;
+  cursor: default;
+  color: #aaa;
+}
+
+.already-added-indicator {
+  position: absolute;
+  right: 12px;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.current-assignment {
+  margin-left: 8px;
+  font-size: 0.8em;
+  color: #999;
+  background-color: #444;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.add-column-btn {
+  height: 40px;
+  align-self: flex-start;
+  margin-top: 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.add-column-btn:hover {
+  background-color: var(--primary-hover);
+}
+
+.add-day-form {
+  display: flex;
+  gap: 0.5rem;
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+
+.add-day-form input {
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  border: 1px solid #444;
+  background-color: #333;
+  color: white;
+  width: 150px;
+}
+
+.add-day-form button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.add-day-form button:last-child {
+  background-color: #555;
+}
+
+.collapse-column-btn {
+  background-color: #555;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.2em 0.4em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  font-size: 0.8em;
+}
+
+.collapse-column-btn:hover {
+  background-color: #666;
+  transform: scale(1.1);
+}
+
+.collapse-column-btn.collapsed {
+  background-color: #777;
+}
+
+.collapsed-info {
+  padding: 5px;
+  height: 10px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+    --bg-dark: #f0f0f0;
+    --bg-light: #e0e0e0;
+  }
+  
+  body {
+    background-color: #f5f5f5;
+  }
+  
+  button {
+    background-color: #f0f0f0;
+  }
+  
+  .column {
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+  
+  .column-header {
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .person-item {
+    background-color: #f5f5f5;
+    border-left: 3px solid transparent;
+  }
+  
+  .person-item:hover {
+    background-color: #e8e8e8;
+    border-left: 3px solid var(--primary-color);
+  }
+  
+  .dropdown-content {
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dropdown-item {
+    color: #213547;
+    border-left: 3px solid transparent;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #e0e0e0;
+    border-left: 3px solid var(--primary-color);
+  }
+  
+  .add-person-input input, .add-day-form input, .edit-day-form input {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    color: #213547;
+  }
+  
+  .people-count {
+    background-color: #ddd;
+    color: #333;
+  }
+  
+  .day-assignment {
+    background-color: #ddd;
+    color: #333;
+  }
+  
+  .print-button {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  
+  .print-options {
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .print-options button {
+    background-color: #e0e0e0;
+    color: #333;
+  }
+  
+  .print-options button:hover {
+    background-color: #d0d0d0;
+  }
+  
+  .print-options .cancel-button {
+    background-color: #ccc;
+  }
+  
+  .edit-day-btn {
+    background-color: rgba(74, 109, 167, 0.1);
+    color: var(--primary-color);
+  }
+  
+  .edit-day-btn:hover {
+    background-color: rgba(74, 109, 167, 0.2);
+  }
+  
+  .columns-container::-webkit-scrollbar-track {
+    background: #e0e0e0;
+  }
+  
+  .columns-container::-webkit-scrollbar-thumb {
+    background-color: #bbb;
+  }
+  
+  .edit-day-form {
+    background-color: rgba(74, 109, 167, 0.05);
+  }
+  
+  .edit-day-form input {
+    border-color: rgba(74, 109, 167, 0.2);
+  }
+  
+  .remove-column-btn {
+    background-color: #e74c3c;
+  }
+  
+  .remove-column-btn:hover {
+    background-color: #c0392b;
+  }
+  
+  .remove-person-btn {
+    background-color: rgba(231, 76, 60, 0.7);
+  }
+  
+  .remove-person-btn:hover {
+    background-color: #e74c3c;
+  }
+  
+  .collapse-column-btn {
+    background-color: #ddd;
+    color: #555;
+  }
+  
+  .collapse-column-btn:hover {
+    background-color: #ccc;
+  }
+  
+  .collapse-column-btn.collapsed {
+    background-color: #bbb;
+  }
+  
+  .collapsed-info {
+    background-color: rgba(74, 109, 167, 0.05);
+    color: #777;
+  }
+}
+
+@media print {
+  .app-header,
+  .add-column-btn,
+  .add-day-form,
+  .dropdown,
+  button {
+    display: none !important;
+  }
+  
+  .column {
+    page-break-inside: avoid;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .add-person-input {
+    max-width: 100%;
+  }
+  
+  .print-controls {
+    align-self: flex-end;
+  }
+  
+  .column:first-child {
+    min-width: 250px;
+  }
+}
+
+/* Only apply special styling to the customers column */
+.columns-container > .column:first-child {
+  min-width: 280px;
+  max-width: 280px;
+  flex-shrink: 0;
+  margin-right: 0.5rem;
+  height: auto; /* Allow height to grow with content */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.dropdown-item.no-customers {
+  color: #ff6b6b;
+  font-style: italic;
+  cursor: default;
+  text-align: center;
+  padding: 15px 12px;
+  font-weight: bold;
+  background-color: rgba(255, 107, 107, 0.1);
+}
+
+.dropdown-item.no-customers:hover {
+  background-color: rgba(255, 107, 107, 0.15);
+  border-left: 3px solid #ff6b6b;
+}
+
+.collapse-column-btn.no-customers {
+  background-color: #ff6b6b;
+  color: white;
+  opacity: 0.6;
+}
+
+.collapse-column-btn.no-customers:hover {
+  background-color: #ff6b6b;
+  opacity: 1;
+}
+
+.no-customers-message {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #ff6b6b;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.2s ease;
+  white-space: nowrap;
+  margin-top: 5px;
+}
+
+/* Ensure dropdown appears above other content */
+.column .dropdown {
+  position: relative;
+  z-index: 1000; /* Higher than regular buttons but lower than the dropdown content */
+}
+
+/* When dropdown is active, increase its container's z-index */
+.column .dropdown.active-dropdown {
+  z-index: 9000; /* Very high, but still below the dropdown content */
+}
+
+/* Style for the first column's person items */
+.columns-container > .column:first-child .person-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Style for the person name */
+.columns-container > .column:first-child .person-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Style for the person actions container */
+.columns-container > .column:first-child .person-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 10px;
+}
+
+/* Ensure the day assignment is properly styled */
+.columns-container > .column:first-child .day-assignment {
+  white-space: nowrap;
+}
+
+/* Ensure the remove button is properly positioned */
+.columns-container > .column:first-child .remove-person-btn {
+  opacity: 0.7;
+}
+
+.columns-container > .column:first-child .remove-person-btn:hover {
+  opacity: 1;
+}
+
+/* Highlighted person item */
+.person-item.highlighted {
+  background-color: var(--primary-color);
+  color: white;
+  animation: highlightPulse 1s ease-in-out;
+}
+
+@keyframes highlightPulse {
+  0% { background-color: var(--primary-color); }
+  50% { background-color: var(--primary-hover); }
+  100% { background-color: var(--primary-color); }
+}
+
+/* Make sure the day assignment is visible when highlighted */
+.person-item.highlighted .day-assignment {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
