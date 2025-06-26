@@ -294,17 +294,6 @@ function App() {
     );
   };
 
-  // Get all people from the main list for dropdown
-  const getAllPeople = () => {
-    return columns[0].people;
-  };
-
-  // Check if a person is already in a specific column
-  const isPersonInColumn = (columnId: string, personId: string) => {
-    const column = columns.find(col => col.id === columnId);
-    return column?.people.some(p => p.id === personId) || false;
-  };
-
   // Get people who are not yet assigned to any day column
   const getUnassignedPeople = () => {
     // Get all people from the main list
